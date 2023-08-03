@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Authentication System</title>
+</head>
+<body>
+    <h1>Login Authentication System</h1>
+    
+    <div id="registration">
+        <h2>Register</h2>
+        <form id="registrationForm">
+            <input type="text" id="regUsername" placeholder="Username" required><br>
+            <input type="password" id="regPassword" placeholder="Password" required><br>
+            <button type="button" onclick="register()">Register</button>
+        </form>
+    </div>
+    
+    <div id="login">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="text" id="loginUsername" placeholder="Username" required><br>
+            <input type="password" id="loginPassword" placeholder="Password" required><br>
+            <button type="button" onclick="login()">Login</button>
+        </form>
+    </div>
+    
+    <div id="securedPage" style="display: none;">
+        <h2>Secured Page</h2>
+        <p>Welcome to the secured page!</p>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        let users = [];
+        let currentUser = null;
+
+        function register() {
+            const regUsername = document.getElementById("regUsername").value;
+            const regPassword = document.getElementById("regPassword").value;
+            
+            users.push({ username: regUsername, password: regPassword });
+            document.getElementById("registrationForm").reset();
+            alert("Registration successful! You can now log in.");
+        }
+
+        function login() {
+            const loginUsername = document.getElementById("loginUsername").value;
+            const loginPassword = document.getElementById("loginPassword").value;
+
+            const user = users.find(u => u.username === loginUsername && u.password === loginPassword);
+            
+            if (user) {
+                currentUser = user;
+                document.getElementById("loginForm").reset();
+                document.getElementById("registration").style.display = "none";
+                document.getElementById("login").style.display = "none";
+                document.getElementById("securedPage").style.display = "block";
+            } else {
+                alert("Invalid username or password. Please try again.");
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById("registration").style.display = "block";
+            document.getElementById("login").style.display = "block";
+            document.getElementById("securedPage").style.display = "none";
+        }
+    </script>
+</body>
+</html>
